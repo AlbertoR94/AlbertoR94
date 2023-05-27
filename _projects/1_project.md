@@ -1,7 +1,7 @@
 ---
 layout: page
-title: RFM analysis and customer segmentation using Python
-description: This is a project that uses RFM analysis for customer segmentation and statistical models to forecast futures customer purchase behavior.
+title: RFM analysis and customer segmentation with Python
+description: This is a project that uses RFM analysis for customer segmentation and statistical models to forecast future customer purchase behavior.
 img: assets/img/12.jpg
 importance: 1
 category: work
