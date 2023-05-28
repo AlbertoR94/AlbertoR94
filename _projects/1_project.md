@@ -9,6 +9,8 @@ category: work
 
 ## Introduction
 - Problem statement.
+It is clear that customers is one of the most important assets of any business and therefore is very important to understand their needs and preferences. En la era actual dominado por la tecnología una compañia puede contar con una base de datos
+
 - What is RFM analysis?
 - Statistical models for behavior forecasting.
 
