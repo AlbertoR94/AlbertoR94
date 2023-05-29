@@ -15,8 +15,16 @@ In this project I present a RFM analysis that aims to segment a collection of cu
 
 The dataset used in this project can be found here. This dataset, that belongs to an anonymous non-store online retail company, consists of several records with information about the transactions made by approximately 4000 customers between 01/12/2010 and 09/12/2011.
 
-- What is RFM analysis?
-- Statistical models for behavior forecasting.
+## What is RFM analysis?
+RFM stands for recency, frequency and monetary value and it is a behavior-based marketing technique which uses past transactional data to perform customer segmentation into groups of individuals with similar transactional patterns. Other customer segmentation techniques can be based on demographic, psychographic or geographic characteristics; however, any company that keeps a record of its customers transactions can make use of this type of technique. 
+
+To  perform a RFM analysis, we use transactional data to compute the recency (days since last purchase or transaction), frequency (total number of transactions) and monetary value (total money spend) for the considered period of time. In Figure 1 I show a capture of the first five records in the Pandas dataframe. Note that for each transaction we have information such as its unique identifier, the ID of the corresponding customer, date in which the transaction was made, etc. Given this information we can calculate all these quantities for each one the customers.
+
+This calculation could be performed directly using Pandas but in this case I’m going to be using a Python library that is specifically designed for analyzing transactional data. This library is called Lifetimes and the documentation can be found here. However, before doing such analysis, the first step is cleaning and preprocessing data to exclude missing values or rows that are not suitable for analysis. The detailed cleaning process can be seen in the accompanying notebook (link), but for the purposes of this report is enough to say that all transaction with no known customer were removed, as well as transactions associated to canceled orders. 
+
+Given the preprocessed dataset we can proceed to perform the calculation of the RFM quantities. This can be done with the following function which accepts as input the whole transactional data an returns a dataframe where each record represents a customer and the corresponding recency, frequency and monetary value. For a definition of these quantities consult the documentation.
+
+Once we have calculated these measures it is time to split the base of customers into groups with similar purchase patterns. This can be done in many ways, including machine learning techniques such as K-means Clustering or Gaussian Mixtures Models, but in this case we will follow a simpler approach that consists in dividing customers into a set of n quantiles according to the distribution of values for recency, frequency, and monetary value. Here we choose n=4 so there is a total of 4x4x4 possible groups. 
 
 ## Results
 - Data Cleansing
