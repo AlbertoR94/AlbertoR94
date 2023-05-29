@@ -8,8 +8,12 @@ category: work
 ---
 
 ## Introduction
-- Problem statement.
-It is clear that customers is one of the most important assets of any business and therefore is very important to understand their needs and preferences. If a company has access to relevant information about customers behavior it makes sense to use this information to . For example we can split customer
+
+It is clear that customers are one of the most important assets of any business and therefore is very important to understand their needs and preferences. If a company has access to relevant information about customer behavior it makes sense to use this information for marketing purposes. For example, we can split customers into different groups according to their purchase patterns; then, use this groups to make special offers or make other business-related decisions. Also, we can use past data to try to forecast the future behavior of customer in order to calculate the customer lifetime value. This will be important if we want to know whether we should spend effort in trying to retain a customer or not.
+
+In this project I present a RFM analysis that aims to segment a collection of customers into groups of similar purchase patterns. Also I apply a probability model to forecast the future expected behavior (in term of transactions) which can be used as an estimate of customer lifetime value. Finally I present the results in an interactive dashboard. 
+
+The dataset used in this project can be found here. This dataset, that belongs to an anonymous non-store online retail company, consists of several records with information about the transactions made by approximately 4000 customers between 01/12/2010 and 09/12/2011.
 
 - What is RFM analysis?
 - Statistical models for behavior forecasting.
