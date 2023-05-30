@@ -24,13 +24,25 @@ This calculation could be performed directly using Pandas but in this case I’m
 
 Given the preprocessed dataset we can proceed to perform the calculation of the RFM quantities. This can be done with the following function which accepts as input the whole transactional data an returns a dataframe where each record represents a customer and the corresponding recency, frequency and monetary value. For a definition of these quantities consult the documentation.
 
-Once we have calculated these measures it is time to split the base of customers into groups with similar purchase patterns. This can be done in many ways, including machine learning techniques such as K-means Clustering or Gaussian Mixtures Models, but in this case we will follow a simpler approach that consists in dividing customers into a set of n quantiles according to the distribution of values for recency, frequency, and monetary value. Here we choose n=4 so there is a total of 4x4x4 possible groups. 
+Once we have calculated these measures it is time to split the base of customers into groups with similar purchase patterns. This can be done in many ways, including machine learning techniques such as K-means Clustering or Gaussian Mixtures Models, but in this case we will follow a simpler approach that consists in dividing customers into a set of n quantiles according to the distribution of values for recency, frequency, and monetary value. Here we choose n=4 so there is a total of 4x4x4 possible groups. The interpretation of these groups is straightforward; for example, the customers in group (4,4,4) are the best since they bought recently, frequently and spent the most. On the contrary, customers belonging to group (1,1,1) are the worst since they bought a long time ago, infrequently and spent a little. The following code takes care of the quartile calculation:
 
-## Results
-- Data Cleansing
-- Performing RFM analysis
-- Purchase behavior forecasting
-- Tableau Dashboard
+<code>
+
+Note that the quartile corresponding to each measure is added as a new column for further analysis.
+
+Forecasting customer purchasing patterns. 
+
+In addition to customer segmentation, we can use customers past transactional data to forecast future purchase behavior. An important question at any point of time is whether a customer is still active and if this is the case how much value or revenue we can expect from her in the future. Assuming that past data can give us information about the future behavior of customers we can create probability models that capture the statistical transactional patterns and compute quantities of interest such as the probability of a customer being active, P(Active| Recency, Frequency); or the expected number of transactions X in given period of time T, E(X| Past transactional data, T). These quantities allow us to assess the potential of each customer in terms of the number of transactions that she will make in the future.
+
+In this report I will not explain the details of these models but present how we can construct them using Python and the Lifetimes library. For a detailed explanation of these type of models the interested reader can consult the references [1] and [2]. In the following I will use a BG/NBD model [1] which stands for Beta Geometric / Negative Binomial Distribution. The following code shows how we can train the model using past transactional data: 
+
+Note that this model only takes into account the recency and frequency measures.
+
+Once we have trained the model, we can visualize the distribution of the probability of still being active or the expected number of transactions as a function of customer recency and frequency.
+
+Then, for each customer, we can compute the probability of being active and the expected number of transactions and add this information to the dataframe as new columns.
+
+The segmentation of customers into groups and the computation of P(Active|.) and E(X|.)   allow us to evaluate how much we can expect from an active customer in the future. The results obtained from this analysis can be used to make informed marketing decisions to better allocate resources and improve revenue. For easy access to this analysis we can load the information contained in the new dataframe in a dashboard. This way, we can easily consult the information associated with each customer. 
 
 Every project has a beautiful feature showcase page.
 It's easy to include images in a flexible 3-column grid format.
