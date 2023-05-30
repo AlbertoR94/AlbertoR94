@@ -33,6 +33,15 @@ This calculation could be performed directly using Pandas but in this case I’m
 
 Given the preprocessed dataset we can proceed to perform the calculation of the RFM quantities. This can be done with the following function which accepts as input the whole transactional data an returns a dataframe where each record represents a customer and the corresponding recency, frequency and monetary value. For a definition of these quantities consult the documentation.
 
+{% highlight python linenos %}
+
+import lifetimes as lt
+
+# Calculate recency, frequency and monetary value from transactional data. See documentation for precise definitions of these quantities
+rfm = lt.utils.summary_data_from_transaction_data(df, "CustomerID", "InvoiceDate", 
+                                                  "Total", observation_period_end='2011-12-31')
+{% endhighlight %}
+
 Once we have calculated these measures it is time to split the base of customers into groups with similar purchase patterns. This can be done in many ways, including machine learning techniques such as K-means Clustering or Gaussian Mixtures Models, but in this case we will follow a simpler approach that consists in dividing customers into a set of n quantiles according to the distribution of values for recency, frequency, and monetary value. Here we choose n=4 so there is a total of 4x4x4 possible groups. The interpretation of these groups is straightforward; for example, the customers in group (4,4,4) are the best since they bought recently, frequently and spent the most. On the contrary, customers belonging to group (1,1,1) are the worst since they bought a long time ago, infrequently and spent a little. The following code takes care of the quartile calculation:
 
 code
