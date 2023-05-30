@@ -37,7 +37,6 @@ Given the preprocessed dataset we can proceed to perform the calculation of the 
 
 import lifetimes as lt
 
-# Calculate recency, frequency and monetary value from transactional data. See documentation for precise definitions of these quantities
 rfm = lt.utils.summary_data_from_transaction_data(df, "CustomerID", "InvoiceDate", 
                                                   "Total", observation_period_end='2011-12-31')
 {% endhighlight %}
