@@ -54,9 +54,24 @@ The resulting dataframe is the following:
 
 Once we have calculated these measures it is time to split the base of customers into groups with similar purchase patterns. This can be done in many ways, including machine learning techniques such as K-means Clustering or Gaussian Mixtures Models, but in this case we will follow a simpler approach that consists in dividing customers into a set of n quantiles according to the distribution of values for recency, frequency, and monetary value. Here we choose n=4 so there is a total of 4x4x4 possible groups. The interpretation of these groups is straightforward; for example, the customers in group (4,4,4) are the best since they bought recently, frequently and spent the most. On the contrary, customers belonging to group (1,1,1) are the worst since they bought a long time ago, infrequently and spent a little. The following code takes care of the quartile calculation:
 
-code
+{% highlight python linenos %}
+
+rfm['r_category'] = pd.qcut(rfm['recency'], q=5, labels=range(1,5), duplicates='drop').astype(str)
+rfm['f_category'] = pd.qcut(rfm['frequency'], q=5, labels=range(1,5), duplicates='drop').astype(str)
+rfm['m_category'] = pd.qcut(rfm['total_spent'], q=4, labels=range(1,5)).astype(str)
+
+{% endhighlight %}
 
 Note that the quartile corresponding to each measure is added as a new column for further analysis.
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/rfm_2.png" title="example image" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3: Dataframe containing customers information.
+</div>
 
 ## Forecasting customer purchasing patterns. 
 
