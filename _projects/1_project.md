@@ -26,7 +26,7 @@ To  perform a RFM analysis, we use transactional data to compute the recency (da
     </div>
 </div>
 <div class="caption">
-    Figure 1: Dataset containing customers information.
+    Figure 1: Dataset containing transactional data.
 </div>
 
 This calculation could be performed directly using Pandas but in this case I’m going to be using a Python library that is specifically designed for analyzing transactional data. This library is called Lifetimes and the documentation can be found here. However, before doing such analysis, the first step is cleaning and preprocessing data to exclude missing values or rows that are not suitable for analysis. The detailed cleaning process can be seen in the accompanying notebook (link), but for the purposes of this report is enough to say that all transaction with no known customer were removed, as well as transactions associated to canceled orders. 
@@ -40,6 +40,17 @@ import lifetimes as lt
 rfm = lt.utils.summary_data_from_transaction_data(df, "CustomerID", "InvoiceDate", 
                                                   "Total", observation_period_end='2011-12-31')
 {% endhighlight %}
+
+The resulting dataframe is the following:
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/rfm.png" title="example image" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 2: Dataframe containing customers information.
+</div>
 
 Once we have calculated these measures it is time to split the base of customers into groups with similar purchase patterns. This can be done in many ways, including machine learning techniques such as K-means Clustering or Gaussian Mixtures Models, but in this case we will follow a simpler approach that consists in dividing customers into a set of n quantiles according to the distribution of values for recency, frequency, and monetary value. Here we choose n=4 so there is a total of 4x4x4 possible groups. The interpretation of these groups is straightforward; for example, the customers in group (4,4,4) are the best since they bought recently, frequently and spent the most. On the contrary, customers belonging to group (1,1,1) are the worst since they bought a long time ago, infrequently and spent a little. The following code takes care of the quartile calculation:
 
