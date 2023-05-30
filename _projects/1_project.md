@@ -20,6 +20,15 @@ RFM stands for recency, frequency and monetary value and it is a behavior-based 
 
 To  perform a RFM analysis, we use transactional data to compute the recency (days since last purchase or transaction), frequency (total number of transactions) and monetary value (total money spend) for the considered period of time. In Figure 1 I show a capture of the first five records in the Pandas dataframe. Note that for each transaction we have information such as its unique identifier, the ID of the corresponding customer, date in which the transaction was made, etc. Given this information we can calculate all these quantities for each one the customers.
 
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/customersDF.png" title="example image" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 1: Dataset containing customers information.
+</div>
+
 This calculation could be performed directly using Pandas but in this case I’m going to be using a Python library that is specifically designed for analyzing transactional data. This library is called Lifetimes and the documentation can be found here. However, before doing such analysis, the first step is cleaning and preprocessing data to exclude missing values or rows that are not suitable for analysis. The detailed cleaning process can be seen in the accompanying notebook (link), but for the purposes of this report is enough to say that all transaction with no known customer were removed, as well as transactions associated to canceled orders. 
 
 Given the preprocessed dataset we can proceed to perform the calculation of the RFM quantities. This can be done with the following function which accepts as input the whole transactional data an returns a dataframe where each record represents a customer and the corresponding recency, frequency and monetary value. For a definition of these quantities consult the documentation.
@@ -32,7 +41,7 @@ Note that the quartile corresponding to each measure is added as a new column fo
 
 ## Forecasting customer purchasing patterns. 
 
-In addition to customer segmentation, we can use customers past transactional data to forecast future purchase behavior. An important question at any point of time is whether a customer is still active and if this is the case how much value or revenue we can expect from her in the future. Assuming that past data can give us information about the future behavior of customers we can create probability models that capture the statistical transactional patterns and compute quantities of interest such as the probability of a customer being active, $$ P(Active \mid D) $$, or the expected number of transactions X in a given period of time T, $$ E(X \mid D,T) $$. These quantities allow us to assess the potential of each customer in terms of the number of transactions that she will make in the future.
+In addition to customer segmentation, we can use customers past transactional data to forecast future purchase behavior. An important question at any point of time is whether a customer is still active and if this is the case how much value or revenue we can expect from her in the future. Assuming that past data can give us information about the future behavior of customers we can create probability models that capture the statistical transactional patterns and compute quantities of interest such as the probability of a customer being active, $$ P(Active \lvert D) $$, or the expected number of transactions X in a given period of time T, $$ E(X \lvert D,T) $$. These quantities allow us to assess the potential of each customer in terms of the number of transactions that she will make in the future.
 
 In this report I will not explain the details of these models but present how we can construct them using Python and the Lifetimes library. For a detailed explanation of these type of models the interested reader can consult the references [1] and [2]. In the following I will use a BG/NBD model [1] which stands for Beta Geometric / Negative Binomial Distribution. The following code shows how we can train the model using past transactional data: 
 
