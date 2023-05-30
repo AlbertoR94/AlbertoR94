@@ -26,13 +26,13 @@ Given the preprocessed dataset we can proceed to perform the calculation of the 
 
 Once we have calculated these measures it is time to split the base of customers into groups with similar purchase patterns. This can be done in many ways, including machine learning techniques such as K-means Clustering or Gaussian Mixtures Models, but in this case we will follow a simpler approach that consists in dividing customers into a set of n quantiles according to the distribution of values for recency, frequency, and monetary value. Here we choose n=4 so there is a total of 4x4x4 possible groups. The interpretation of these groups is straightforward; for example, the customers in group (4,4,4) are the best since they bought recently, frequently and spent the most. On the contrary, customers belonging to group (1,1,1) are the worst since they bought a long time ago, infrequently and spent a little. The following code takes care of the quartile calculation:
 
-(code)
+code
 
 Note that the quartile corresponding to each measure is added as a new column for further analysis.
 
 ## Forecasting customer purchasing patterns. 
 
-In addition to customer segmentation, we can use customers past transactional data to forecast future purchase behavior. An important question at any point of time is whether a customer is still active and if this is the case how much value or revenue we can expect from her in the future. Assuming that past data can give us information about the future behavior of customers we can create probability models that capture the statistical transactional patterns and compute quantities of interest such as the probability of a customer being active, \[P(Active|D)\], or the expected number of transactions X in a given period of time T, \[E(X|D,T)\]. These quantities allow us to assess the potential of each customer in terms of the number of transactions that she will make in the future.
+In addition to customer segmentation, we can use customers past transactional data to forecast future purchase behavior. An important question at any point of time is whether a customer is still active and if this is the case how much value or revenue we can expect from her in the future. Assuming that past data can give us information about the future behavior of customers we can create probability models that capture the statistical transactional patterns and compute quantities of interest such as the probability of a customer being active, P(Active, D), or the expected number of transactions X in a given period of time T, E(X,D,T). These quantities allow us to assess the potential of each customer in terms of the number of transactions that she will make in the future.
 
 In this report I will not explain the details of these models but present how we can construct them using Python and the Lifetimes library. For a detailed explanation of these type of models the interested reader can consult the references [1] and [2]. In the following I will use a BG/NBD model [1] which stands for Beta Geometric / Negative Binomial Distribution. The following code shows how we can train the model using past transactional data: 
 
