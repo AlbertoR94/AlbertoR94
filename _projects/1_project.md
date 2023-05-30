@@ -103,6 +103,15 @@ Once we have trained the model, we can visualize the distribution of the probabi
 
 Then, for each customer, we can compute the probability of being active and the expected number of transactions and add this information to the dataframe as new columns.
 
+{% highlight python linenos %}
+
+rfm['prob_alive'] = bgf.conditional_probability_alive(rfm['frequency'], rfm['recency'], rfm['T'])
+# We can also predict the future number of transactions for the next N time periods
+for T in range(1, 11):
+    rfm['predicted_purchases_' + str(T)] = bgf.conditional_expected_number_of_purchases_up_to_time(T, rfm['frequency'],                                                      rfm['recency'], rfm['T']).sort_values()
+    
+{% endhighlight %}
+
 The segmentation of customers into groups and the computation of $$ P(\textrm{Active} \lvert \textrm{Data}) $$ and $$ E(X \lvert \textrm{Data},T) $$ allow us to evaluate how much we can expect from an active customer in the future. The results obtained from this analysis can be used to make informed marketing decisions to better allocate resources and improve revenue. For easy access to this analysis we can load the information contained in the new dataframe in a dashboard. This way, we can easily consult the information associated with each customer. 
 
 Every project has a beautiful feature showcase page.
