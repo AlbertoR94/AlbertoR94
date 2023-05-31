@@ -114,7 +114,7 @@ for T in range(1, 11):
 
 The segmentation of customers into groups and the computation of $$ P(\textrm{Active} \lvert \textrm{Data}) $$ and $$ E(X \lvert \textrm{Data},T) $$ allow us to evaluate how much we can expect from an active customer in the future. The results obtained from this analysis can be used to make informed marketing decisions to better allocate resources and improve revenue. For easy access to this analysis we can load the information contained in the new dataframe in a dashboard. This way, we can easily consult the information associated with each customer. 
 
-Every project has a beautiful feature showcase page.
+<!-- Every project has a beautiful feature showcase page.
 It's easy to include images in a flexible 3-column grid format.
 Make your photos 1/3, 2/3, or full width.
 
@@ -184,6 +184,6 @@ Here's the code for the last row of images above:
     </div>
 </div>
 ```
-{% endraw %}
+{% endraw %} -->
 
 <iframe seamless frameborder="0" src="https://public.tableau.com/views/RFManalysis_16850252617450/Dashboard1?:embed=yes&:display_count=yes&:showVizHome=no" width = '800' height = '650' scrolling='yes' ></iframe>    
