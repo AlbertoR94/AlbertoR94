@@ -13,12 +13,12 @@ It is clear that customers are one of the most important assets of any business 
 
 In this project I present a RFM analysis that aims to segment a collection of customers into groups of similar purchase patterns. Also I apply a probability model to forecast the future expected behavior (in term of transactions) which can be used as an estimate of customer lifetime value. Finally I present the results in an interactive dashboard. 
 
-The dataset used in this project can be found here. This dataset, that belongs to an anonymous non-store online retail company, consists of several records with information about the transactions made by approximately 4000 customers between 01/12/2010 and 09/12/2011.
+The dataset used in this project can be found here: <a href="https://archive.ics.uci.edu/ml/datasets/online+retail">UCI repository</a>. This dataset, that belongs to an anonymous non-store online retail company, consists of several records with information about the transactions made by approximately 4000 customers between 01/12/2010 and 09/12/2011.
 
 ## What is RFM analysis?
 RFM stands for recency, frequency and monetary value and it is a behavior-based marketing technique which uses past transactional data to perform customer segmentation into groups of individuals with similar transactional patterns. Other customer segmentation techniques can be based on demographic, psychographic or geographic characteristics; however, any company that keeps a record of its customers transactions can make use of this type of technique. 
 
-To  perform a RFM analysis, we use transactional data to compute the recency (days since last purchase or transaction), frequency (total number of transactions) and monetary value (total money spend) for the considered period of time. In Figure 1 I show a capture of the first five records in the Pandas dataframe. Note that for each transaction we have information such as its unique identifier, the ID of the corresponding customer, date in which the transaction was made, etc. Given this information we can calculate all these quantities for each one the customers.
+To  perform a RFM analysis, we use transactional data to compute the recency (days since last purchase or transaction), frequency (total number of transactions) and monetary value (total money spent) for the considered period of time. In Figure 1 I show a capture of the first five records in the Pandas dataframe. Note that for each transaction we have information such as its unique identifier, the ID of the corresponding customer, date in which the transaction was made, etc. Given this information we can calculate all these quantities for each one of the customers.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -29,7 +29,7 @@ To  perform a RFM analysis, we use transactional data to compute the recency (da
     Figure 1: Dataset containing transactional data.
 </div>
 
-This calculation could be performed directly using Pandas but in this case I’m going to be using a Python library that is specifically designed for analyzing transactional data. This library is called Lifetimes and the documentation can be found here. However, before doing such analysis, the first step is cleaning and preprocessing data to exclude missing values or rows that are not suitable for analysis. The detailed cleaning process can be seen in the accompanying notebook (link), but for the purposes of this report is enough to say that all transaction with no known customer were removed, as well as transactions associated to canceled orders. 
+This calculation can be performed directly using Pandas but in this case I’m going to be using a Python library that is specifically designed for analyzing transactional data. This library is called Lifetimes and the documentation can be found here <a href="https://lifetimes.readthedocs.io/en/latest/">docs</a>. However, before doing such analysis, the first step is cleaning and preprocessing data to exclude missing values or rows that are not suitable for analysis. The detailed cleaning process can be seen in the accompanying notebook <a href="https://github.com/AlbertoR94/Python-RFM-analysis-">RFM</a>, but for the purposes of this report is enough to say that all transaction with no known customer were removed, as well as transactions associated to canceled orders. 
 
 Given the preprocessed dataset we can proceed to perform the calculation of the RFM quantities. This can be done with the following function which accepts as input the whole transactional data an returns a dataframe where each record represents a customer and the corresponding recency, frequency and monetary value. For a definition of these quantities consult the documentation.
 
@@ -77,7 +77,7 @@ Note that the quartile corresponding to each measure is added as a new column fo
 
 In addition to customer segmentation, we can use customers past transactional data to forecast future purchase behavior. An important question at any point of time is whether a customer is still active and if this is the case how much value or revenue we can expect from her in the future. Assuming that past data can give us information about the future behavior of customers we can create probability models that capture the statistical transactional patterns and compute quantities of interest such as the probability of a customer being active, $$ P(\textrm{Active} \lvert \textrm{Data}) $$, or the expected number of transactions $$ X $$ in a given period of time $$ T $$, $$ E(X \lvert \textrm{Data},T) $$. These quantities allow us to assess the potential of each customer in terms of the number of transactions that she will make in the future.
 
-In this report I will not explain the details of these models but present how we can construct them using Python and the Lifetimes library. For a detailed explanation of these type of models the interested reader can consult the references [1] and [2]. In the following I will use a BG/NBD model [1] which stands for Beta Geometric / Negative Binomial Distribution. The following code shows how we can train the model using past transactional data:
+In this report I will not explain the details of these models but present how we can construct them using Python and the Lifetimes library. For a detailed explanation of these type of models the interested reader can consult the references <d-cite key="schmittlein1987counting", "fader2005counting"></d-cite>. In the following I will use a BG/NBD model which stands for Beta Geometric / Negative Binomial Distribution. The following code shows how we can train the model using past transactional data:
 
 {% highlight python linenos %}
 
@@ -114,4 +114,5 @@ for T in range(1, 11):
 
 The segmentation of customers into groups and the computation of $$ P(\textrm{Active} \lvert \textrm{Data}) $$ and $$ E(X \lvert \textrm{Data},T) $$ allow us to evaluate how much we can expect from an active customer in the future. The results obtained from this analysis can be used to make informed marketing decisions to better allocate resources and improve revenue. For easy access to this analysis we can load the information contained in the new dataframe in a dashboard. This way, we can easily consult the information associated with each customer. 
 
+## Tableau dashboard
 <iframe seamless frameborder="0" src="https://public.tableau.com/views/RFManalysis_16850252617450/Dashboard1?:embed=yes&:display_count=yes&:showVizHome=no" width = '800' height = '650' scrolling='yes' ></iframe>    
